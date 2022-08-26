@@ -1,14 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { IoPersonAddOutline } from 'react-icons/io5';
 import { nanoid } from 'nanoid';
 import { Label, Button}  from './Form.styled';
 import { Formik, Field, Form } from 'formik';
+import { useDispatch } from 'react-redux';
+import contactsActions from '../../redux/actions';
 
-export const BaseForm = ({onSubmit}) => {
+export const BaseForm = () => {
+  const dispatch = useDispatch();
+
   const addContact = (values, { resetForm }) => {
     values.id = nanoid();
-    onSubmit(values);
+    dispatch(contactsActions.addContact(values.name, values.number));
     resetForm();
   };
   
@@ -42,6 +45,3 @@ export const BaseForm = ({onSubmit}) => {
     
   }
   
-  BaseForm.propTypes = {
-    onSubmit: PropTypes.func,
-  };
